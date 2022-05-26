@@ -18,8 +18,23 @@ public class ProfesionServicio implements IProfesionServicio{
     
     @Override
     public Profesion crear(Profesion profesion) {
-        this.profesionList.add(profesion);
-        return profesion;
+        if(this.buscarCodigo(profesion.getCodigo())==false){
+            this.profesionList.add(profesion);
+            return profesion;
+        }else
+            throw new RuntimeException("El código de la persona ya existe"); 
+    }
+    
+    private boolean buscarCodigo(int codigo)
+    {
+        var retorno=false;
+        for(var profesion:this.profesionList){
+            if(profesion.getCodigo()==codigo){
+                retorno=true;
+                break;
+            }
+        }
+        return retorno;
     }
 
     @Override
@@ -29,15 +44,13 @@ public class ProfesionServicio implements IProfesionServicio{
 
    
     @Override
-    public Profesion buscarPorCodigo(int codigo) {
-        var profesion = new Profesion(codigo,"Ningún Resultado");
-        for(Profesion pro:this.profesionList){
-            if(pro.getCodigo()==codigo){
-                profesion=pro;
-                break;
-            }
+    public Profesion buscarPorCodigo(int codigo){
+        for(var profesion:this.profesionList){
+            if(profesion.getCodigo()==codigo)
+                return profesion;
         }
-        return profesion;}
+        throw new RuntimeException("No se encontró el código de la profesión");
+    }
 
     @Override
     public Profesion eliminar(int codigo) {
