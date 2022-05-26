@@ -5,6 +5,9 @@
 package semana01.directorios;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,6 +26,18 @@ public class GestorDirectorios {
             if(elemento.isDirectory()){
                 System.out.println("Carpeta: "+elemento.getAbsolutePath());
             }
+        }
+        
+        var ruta = new File("C:/carpeta1");
+        if (ruta.exists()==false)
+        {
+            ruta.mkdir();
+        }
+        var archivo = new File("C:/carpeta1/hola.txt");
+        try {
+            archivo.createNewFile();
+        } catch (IOException ex) {
+            System.out.println("Error al crear el archivo: "+ex.getMessage());
         }
     
     }
