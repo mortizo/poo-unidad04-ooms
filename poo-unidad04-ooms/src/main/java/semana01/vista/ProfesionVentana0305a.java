@@ -156,21 +156,17 @@ public class ProfesionVentana0305a extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(evt.getSource().equals(this.jButton1))
-        {
-            try {
-                String [] params = new String[6];
-                params[0]=this.jTextField3.getText();
-                params[1]=this.jTextField4.getText();
-                this.profesionControl.crear(params);
-                this.actualizarTabla();
-            }catch (InputMismatchException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(),"Datos ingresados incorrectos",JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(ProfesionVentana0305a.class.getName()).log(Level.SEVERE, null, ex);
-            }catch (RuntimeException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(),"Datos ingresados incorrectos",JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(ProfesionVentana0305a.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            String [] params = new String[2];
+            params[0]=this.jTextField3.getText();
+            params[1]=this.jTextField4.getText();
+            this.profesionControl.crear(params);
+            this.actualizarTabla();
+            JOptionPane.showMessageDialog(this, "Profesión almacenada satisfactoriamente",
+                        "ATENCIÓN",JOptionPane.INFORMATION_MESSAGE); 
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",
+                        JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -193,11 +189,15 @@ public class ProfesionVentana0305a extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
-            this.profesionControl.eliminar(this.jTextField3.getText());
-            this.actualizarTabla();
+            if(JOptionPane.showConfirmDialog(this, "Está seguro de que desea eliminar el registro",
+                    "ATENCIÓN", JOptionPane.INFORMATION_MESSAGE)==0){
+                this.profesionControl.eliminar(this.jTextField3.getText());
+                this.actualizarTabla();
+                JOptionPane.showMessageDialog(this, "Profesión eliminada satisfactoriamente",
+                        "ATENCIÓN",JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(ProfesionVentana0305a.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

@@ -19,15 +19,15 @@ public class PersonaServicio implements IPersonaServicio{
     
     @Override
     public Persona crear(Persona persona) { 
-        if(this.buscarCodigo(persona.getCodigo())==false){
+        if(this.existeCodigo(persona.getCodigo())){
+            throw new RuntimeException("El código de la persona ya existe");
+        }else{
             this.personaList.add(persona);
             return persona;
-        }else
-            throw new RuntimeException("El código de la persona ya existe");
-        
+        }
     }
     
-    private boolean buscarCodigo(int codigo)
+    private boolean existeCodigo(int codigo)
     {
         var retorno=false;
         for(var persona:this.personaList){
@@ -47,7 +47,6 @@ public class PersonaServicio implements IPersonaServicio{
    
     @Override
     public Persona buscarPorCodigo(int codigo) {
-  
         for(var persona:this.personaList){
             if(persona.getCodigo()==codigo)
                 return(persona);

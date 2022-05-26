@@ -18,14 +18,14 @@ public class ProfesionServicio implements IProfesionServicio{
     
     @Override
     public Profesion crear(Profesion profesion) {
-        if(this.buscarCodigo(profesion.getCodigo())==false){
-            this.profesionList.add(profesion);
-            return profesion;
-        }else
-            throw new RuntimeException("El código de la persona ya existe"); 
+        if(this.existeCodigo(profesion.getCodigo())){
+            throw new RuntimeException("El código de la profesión ya existe"); 
+        }
+        this.profesionList.add(profesion);
+        return profesion;
     }
     
-    private boolean buscarCodigo(int codigo)
+    private boolean existeCodigo(int codigo)
     {
         var retorno=false;
         for(var profesion:this.profesionList){

@@ -18,15 +18,41 @@ public class ProfesionControl {
     
     private final ProfesionServicio personaServicio = new ProfesionServicio();
     
-    public Profesion crear(String [] params) throws InputMismatchException, RuntimeException{
-        var profesion = new Profesion(Integer.valueOf(params[0]),params[1]);
+    public Profesion crear(String [] params) throws RuntimeException{
+        var profesion = new Profesion(this.convertirEntero(params[0]),params[1]);
         this.personaServicio.crear(profesion);
         return profesion;
     }
     
-    public Profesion eliminar(String param) throws Exception{
-        return this.personaServicio.eliminar(Integer.valueOf(param));
+    public Profesion eliminar(String param) throws RuntimeException{
+        return this.personaServicio.eliminar(this.convertirEntero(param));
     }
+    
+    
+    private int convertirEntero(String numero)
+    {
+        try{
+            return Integer.valueOf(numero);
+        }catch(NumberFormatException e1){
+            throw new RuntimeException("Valor ingresado no es un número entero"); 
+        }catch(Exception e1){
+            throw new RuntimeException("Error inesperado"); 
+        }
+    }
+    
+    private double convertirDecimal(String numero)
+    {
+        try{
+            return Double.valueOf(numero);
+        }catch(NumberFormatException e1){
+            throw new RuntimeException("Valor ingresado no es un número entero"); 
+        }catch(Exception e1){
+            throw new RuntimeException("Error inesperado"); 
+            
+        }
+    }
+    
+
     
     public List<Profesion> listar() {
         return this.personaServicio.listar();
