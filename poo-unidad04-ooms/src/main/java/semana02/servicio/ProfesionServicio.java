@@ -58,8 +58,7 @@ public class ProfesionServicio implements IProfesionServicio{
 
     @Override
     public List<Profesion> listar() {
-        this.profesionList=this.recuperarDeArchivo("c:/carpeta1/archivoProfesion.dat");
-        return this.profesionList;
+        return this.profesionList=this.recuperarDeArchivo("c:/carpeta1/archivoProfesion.dat");
     }
     
     private List<Profesion> recuperarDeArchivo(String ruta){

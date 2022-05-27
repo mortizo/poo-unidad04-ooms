@@ -8,11 +8,15 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import semana02.modelo.Persona;
 import semana02.modelo.Profesion;
 
@@ -30,20 +34,27 @@ public class PersonaServicio implements IPersonaServicio{
             throw new RuntimeException("El código de la persona ya existe");
         }else{
             this.personaList.add(persona);
-            this.almacenarEnArchivo(this.personaList, "C:/carpeta1/archivoPersona.dat");
+            this.almacenarEnArchivo("C:/carpeta1/archivoPersona.dat",persona);
             return persona;
         }
     }
-    private void almacenarEnArchivo(List<Persona> personaList, String ruta){
-        try{
-            var fichero = new File(ruta);
-            fichero.delete();
-            var salida = new ObjectOutputStream(new FileOutputStream(ruta,true));
-            salida.writeObject(personaList);
-            salida.close();
-        }
-        catch(Exception e1){
-            System.out.println("Error al guardar"+e1.toString());
+  
+    
+    public static void almacenarEnArchivo(String ruta,Persona persona){
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(new File(ruta),true);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(persona);
+            oos.close();
+        } catch (Exception ex) {
+            Logger.getLogger(PersonaServicio.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException ex) {
+                Logger.getLogger(PersonaServicio.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -61,23 +72,25 @@ public class PersonaServicio implements IPersonaServicio{
 
     @Override
     public List<Persona> listar() {
-        this.personaList=this.recuperarDeArchivo("c:/carpeta1/archivoPersona.dat");   
-        return this.personaList;
+        return this.personaList=this.recuperarDeArchivo("c:/carpeta1/archivoPersona.dat");
     }
     
-    private List<Persona> recuperarDeArchivo(String ruta){
-        List<Persona> personaList = new ArrayList<>();
+    public static List<Persona> recuperarDeArchivo(String ruta) //throws Exception{
+    {
+        List<Persona> list = new ArrayList<Persona>();
         try{
-            var entrada = new ObjectInputStream(new FileInputStream(ruta));
-            personaList=(ArrayList<Persona>)entrada.readObject();
-        }
-        catch(Exception e1){
-            System.out.println("Error General al recuperar"+e1.toString());
-        } 
-        return personaList;
+            FileInputStream fis = new FileInputStream(new File(ruta));
+            ObjectInputStream ois = null;
+            while(fis.available()>0){
+                ois = new ObjectInputStream(fis);
+                Persona persona = (Persona) ois.readObject();
+                list.add(persona);
+            }
+            ois.close();
+        }catch(Exception e1){e1.getStackTrace().toString();}
+        return list;
     }
-
-   
+       
     @Override
     public Persona buscarPorCodigo(int codigo) {
         for(var persona:this.personaList){

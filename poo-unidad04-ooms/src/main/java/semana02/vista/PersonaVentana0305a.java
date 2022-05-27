@@ -190,7 +190,6 @@ public class PersonaVentana0305a extends JInternalFrame implements ActionListene
        this.tableModel1.addColumn("Nombres");
        this.tableModel1.addColumn("Edad");
        this.tableModel1.addColumn("Profesión");
-       
        this.jTable1 = new JTable (this.tableModel1);
        this.jScrollPane1 = new JScrollPane(jTable1);
    }
@@ -227,23 +226,24 @@ public class PersonaVentana0305a extends JInternalFrame implements ActionListene
             if(JOptionPane.showConfirmDialog(this, "¿ Está seguro de registrar estos datos ?",
                     "Seleccione una opción...", JOptionPane.YES_NO_CANCEL_OPTION, 
                     JOptionPane.QUESTION_MESSAGE)==0){
-                String [] params = new String[7];
-                params[0]=this.jtextFieldList.get(0).getText();
-                params[1]=this.jtextFieldList.get(1).getText();
-                params[2]=this.jtextFieldList.get(2).getText();
-                params[3]=this.jtextFieldList.get(3).getText();
-                params[4]=this.jtextFieldList.get(4).getText();
-                params[5]=this.jtextFieldList.get(5).getText();
-                var profesion = (Profesion)(this.jComboBox1.getSelectedItem());
-                params[6]=String.valueOf(profesion.getCodigo());
-                this.personaControl.crear(params);
-                this.actualizarTabla();
-                JOptionPane.showMessageDialog(this,"La persona se ha registrado con éxito",
-                        "Registro de personas",JOptionPane.INFORMATION_MESSAGE);
-                JOptionPane.showMessageDialog(this,"Debe registrar sólamente números",
-                        "Registro de personas",JOptionPane.ERROR_MESSAGE);
-                JOptionPane.showMessageDialog(this,"La edad sobrepasa los 100 años",
-                        "Registro de personas",JOptionPane.WARNING_MESSAGE);
+                try{    
+                    String [] params = new String[7];
+                    params[0]=this.jtextFieldList.get(0).getText();
+                    params[1]=this.jtextFieldList.get(1).getText();
+                    params[2]=this.jtextFieldList.get(2).getText();
+                    params[3]=this.jtextFieldList.get(3).getText();
+                    params[4]=this.jtextFieldList.get(4).getText();
+                    params[5]=this.jtextFieldList.get(5).getText();
+                    var profesion = (Profesion)(this.jComboBox1.getSelectedItem());
+                    params[6]=String.valueOf(profesion.getCodigo());
+                    this.personaControl.crear(params);
+                    this.actualizarTabla();
+                    JOptionPane.showMessageDialog(this, "Persona almacenada satisfactoriamente",
+                            "ATENCIÓN",JOptionPane.INFORMATION_MESSAGE); 
+                }catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(),"ERROR",
+                                JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
         

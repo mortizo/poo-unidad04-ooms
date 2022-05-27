@@ -21,14 +21,37 @@ public class PersonaControl {
     private final ProfesionServicio profesionServicio = new ProfesionServicio();
     
     public Persona crear(String [] params) {
-        var fechaNacimiento = LocalDate.of(Integer.valueOf(params[3]),
-                Integer.valueOf(params[4]), 
-                Integer.valueOf(params[5]));  
-        var profesion = this.profesionServicio.buscarPorCodigo(Integer.valueOf(params[6]));
-        var persona = new Persona(Integer.valueOf(params[0]),params[1],
+        var fechaNacimiento = LocalDate.of(this.convertirEntero(params[3]),
+                this.convertirEntero(params[4]), 
+                this.convertirEntero(params[5]));  
+        var profesion = this.profesionServicio.buscarPorCodigo(this.convertirEntero(params[6]));
+        var persona = new Persona(this.convertirEntero(params[0]),params[1],
                 params[2],fechaNacimiento,profesion);
         this.personaServicio.crear(persona);
         return persona;
+    }
+    
+    private int convertirEntero(String numero)
+    {
+        try{
+            return Integer.valueOf(numero);
+        }catch(NumberFormatException e1){
+            throw new RuntimeException("Valor ingresado no es un número entero"); 
+        }catch(Exception e1){
+            throw new RuntimeException("Error inesperado"); 
+        }
+    }
+    
+    private double convertirDecimal(String numero)
+    {
+        try{
+            return Double.valueOf(numero);
+        }catch(NumberFormatException e1){
+            throw new RuntimeException("Valor ingresado no es un número entero"); 
+        }catch(Exception e1){
+            throw new RuntimeException("Error inesperado"); 
+            
+        }
     }
     
     public List<Persona> listar() {

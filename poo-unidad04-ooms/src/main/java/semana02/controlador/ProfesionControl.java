@@ -16,16 +16,16 @@ import semana02.servicio.ProfesionServicio;
 public class ProfesionControl {
     
     
-    private final ProfesionServicio personaServicio = new ProfesionServicio();
+    private final ProfesionServicio profesionServicio = new ProfesionServicio();
     
     public Profesion crear(String [] params) throws RuntimeException{
         var profesion = new Profesion(this.convertirEntero(params[0]),params[1]);
-        this.personaServicio.crear(profesion);
+        this.profesionServicio.crear(profesion);
         return profesion;
     }
     
     public Profesion eliminar(String param) throws RuntimeException{
-        return this.personaServicio.eliminar(this.convertirEntero(param));
+        return this.profesionServicio.eliminar(this.convertirEntero(param));
     }
     
     
@@ -55,7 +55,7 @@ public class ProfesionControl {
 
     
     public List<Profesion> listar() {
-        return this.personaServicio.listar();
+        return this.profesionServicio.listar();
     }
 
 }
