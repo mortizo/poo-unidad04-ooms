@@ -34,28 +34,25 @@ public class PersonaServicio implements IPersonaServicio{
             throw new RuntimeException("El código de la persona ya existe");
         }else{
             this.personaList.add(persona);
-            this.almacenarEnArchivo("C:/carpeta1/archivoPersona.dat",persona);
+            try {
+                this.almacenarEnArchivo("C:/carpeta1/archivoPersona.dat",persona);
+            } catch (Exception ex) {
+                throw new RuntimeException("No se puede almacenar datos en el archivo "+ex.getMessage());
+            }
             return persona;
         }
     }
   
     
-    public static void almacenarEnArchivo(String ruta,Persona persona){
-        FileOutputStream fos = null;
+    public static void almacenarEnArchivo(String ruta,Persona persona) throws Exception{
+        ObjectOutputStream salida = null;
         try {
-            fos = new FileOutputStream(new File(ruta),true);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(persona);
-            oos.close();
+            salida = new ObjectOutputStream(new FileOutputStream(new File(ruta),true));
+            salida.writeObject(persona);
+            salida.close();
         } catch (Exception ex) {
-            Logger.getLogger(PersonaServicio.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException ex) {
-                Logger.getLogger(PersonaServicio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+            salida.close();
+        } 
     }
     
     private boolean existeCodigo(int codigo)
@@ -72,23 +69,28 @@ public class PersonaServicio implements IPersonaServicio{
 
     @Override
     public List<Persona> listar() {
-        return this.personaList=this.recuperarDeArchivo("c:/carpeta1/archivoPersona.dat");
+        try {
+            return this.personaList=this.recuperarDeArchivo("c:/carpeta1/archivoPersona.dat");
+        } catch (Exception ex) {
+            throw new RuntimeException("No se puede recuperar datos del archivo"+ex.getMessage());
+        }
     }
     
-    public static List<Persona> recuperarDeArchivo(String ruta) //throws Exception{
-    {
-        List<Persona> list = new ArrayList<Persona>();
-        try{
-            FileInputStream fis = new FileInputStream(new File(ruta));
-            ObjectInputStream ois = null;
+    public static List<Persona> recuperarDeArchivo(String ruta) throws Exception{
+        List<Persona> personaList = new ArrayList<Persona>();
+        var fis = new FileInputStream(new File(ruta));
+        ObjectInputStream entrada = null;
+        try{        
             while(fis.available()>0){
-                ois = new ObjectInputStream(fis);
-                Persona persona = (Persona) ois.readObject();
-                list.add(persona);
+                entrada = new ObjectInputStream(fis);
+                Persona persona = (Persona) entrada.readObject();
+                personaList.add(persona);
             }
-            ois.close();
-        }catch(Exception e1){e1.getStackTrace().toString();}
-        return list;
+            entrada.close();
+        }catch(Exception ex){
+            entrada.close();
+        }
+        return personaList;
     }
        
     @Override

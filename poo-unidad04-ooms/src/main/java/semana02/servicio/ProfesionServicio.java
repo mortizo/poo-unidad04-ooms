@@ -12,6 +12,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import semana02.modelo.Profesion;
 
 /**
@@ -28,19 +30,24 @@ public class ProfesionServicio implements IProfesionServicio{
             throw new RuntimeException("El código de la profesión ya existe"); 
         }
         this.profesionList.add(profesion);
-        this.almacenarEnArchivo(profesion, "C:/carpeta1/archivoProfesion.dat");
+        try {
+            this.almacenarEnArchivo(profesion, "C:/carpeta1/archivoProfesion.dat");
+        } catch (Exception ex) {
+            throw new RuntimeException("No se puede almacenar en archivo"+ex.getMessage());
+        }
         return profesion;
     }
 
-    private void almacenarEnArchivo(Profesion profesion, String ruta){
+    private void almacenarEnArchivo(Profesion profesion, String ruta) throws Exception{
+        DataOutputStream salida=null;
         try{
-            var salida = new DataOutputStream(new FileOutputStream(ruta,true));
+            salida = new DataOutputStream(new FileOutputStream(ruta,true));
             salida.writeInt(profesion.getCodigo());
             salida.writeUTF(profesion.getDescripcion());
             salida.close();
         }
         catch(Exception e1){
-        //    System.out.println("Error General al almacenar Profesión"+e1.toString());
+            salida.close();
         }
     }
     
@@ -58,13 +65,19 @@ public class ProfesionServicio implements IProfesionServicio{
 
     @Override
     public List<Profesion> listar() {
-        return this.profesionList=this.recuperarDeArchivo("c:/carpeta1/archivoProfesion.dat");
+        try {
+            this.profesionList=this.recuperarDeArchivo("c:/carpeta1/archivoProfesion.dat");
+        } catch (Exception ex) {
+            throw new RuntimeException("No se puede recuperar datos del archivo"+ex.getMessage());
+        }
+        return this.profesionList;
     }
     
-    private List<Profesion> recuperarDeArchivo(String ruta){
+    private List<Profesion> recuperarDeArchivo(String ruta) throws Exception{
         List<Profesion> profesionList = new ArrayList<>();
+        DataInputStream entrada=null;
         try{
-            var entrada = new DataInputStream(new FileInputStream(ruta));
+            entrada = new DataInputStream(new FileInputStream(ruta));
             while(true)
             {
                 var codigo=entrada.readInt();
@@ -74,7 +87,7 @@ public class ProfesionServicio implements IProfesionServicio{
             }
         }
         catch(Exception e1){
-          //  System.out.println("Error General al recuperar Profesión"+e1.toString());
+          entrada.close();
         } 
         return profesionList;
     }
