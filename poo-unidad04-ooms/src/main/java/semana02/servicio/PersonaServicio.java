@@ -44,7 +44,7 @@ public class PersonaServicio implements IPersonaServicio{
     }
   
     
-    public static void almacenarEnArchivo(String ruta,Persona persona) throws Exception{
+    public void almacenarEnArchivo(String ruta,Persona persona) throws Exception{
         ObjectOutputStream salida = null;
         try {
             salida = new ObjectOutputStream(new FileOutputStream(new File(ruta),true));
@@ -76,7 +76,7 @@ public class PersonaServicio implements IPersonaServicio{
         }
     }
     
-    public static List<Persona> recuperarDeArchivo(String ruta) throws Exception{
+    public List<Persona> recuperarDeArchivo(String ruta) throws Exception{
         List<Persona> personaList = new ArrayList<Persona>();
         var fis = new FileInputStream(new File(ruta));
         ObjectInputStream entrada = null;
