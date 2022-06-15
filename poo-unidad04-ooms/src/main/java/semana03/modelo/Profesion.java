@@ -4,6 +4,7 @@
  */
 package semana03.modelo;
 
+
 import java.io.Serializable;
 
 /**
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * @author morti
  */
 public class Profesion implements Serializable{
- //   private static final long serialVersionUID = 1L;
+
     private int codigo;
     private String descripcion;
 

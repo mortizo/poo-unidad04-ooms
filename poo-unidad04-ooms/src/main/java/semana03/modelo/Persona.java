@@ -4,7 +4,6 @@
  */
 package semana03.modelo;
 
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -14,8 +13,7 @@ import java.time.Period;
  * @author morti
  */
 public class Persona implements Serializable{
- //   private static final long serialVersionUID = 1L;
-    
+  
     private int codigo;
     private String nombre;
     private String apellido;
