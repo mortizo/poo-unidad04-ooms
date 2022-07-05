@@ -175,7 +175,7 @@ public class PersonaVentana0305a extends JInternalFrame implements ActionListene
        this.jButtonList.add(new JButton());
        this.jButtonList.add(new JButton());
        
-       this.jButtonList.get(0).setText("Registrar");
+       this.jButtonList.get(0).setText("Save");
        this.jButtonList.get(1).setText("Mostrar");
        
        this.jButtonList.get(0).addActionListener(this);
