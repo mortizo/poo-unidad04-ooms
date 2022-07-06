@@ -4,6 +4,8 @@
  */
 package p60.semana01;
 
+import java.io.File;
+
 /**
  *
  * @author morti
@@ -35,6 +37,29 @@ public class Principal {
         }
         
         System.out.println("Finaliza el programa con el valor de x en: "+x);
+        
+        var infoDirectorio = new File("C:/carpeta1");
+        
+        var existe=infoDirectorio.exists();
+        
+        if(existe==true){
+            System.out.println("El directorio/archivo "+infoDirectorio.getName()+" existe");
+        }else{
+            System.out.println("El directorio/archivo "+infoDirectorio.getName()+" no existe");
+        }
+        
+        File [] archivosInternos=infoDirectorio.listFiles();
+        
+        for(var i=0;i<archivosInternos.length;i++)
+        {
+            System.out.println(archivosInternos[i].getAbsolutePath());
+        }
+        
+        archivosInternos[0].delete();
+        
+        var infoDirectorioNuevo = new File("C:/carpeta1/carpetaNueva");
+        infoDirectorioNuevo.mkdir();
+        
         
     }
     
