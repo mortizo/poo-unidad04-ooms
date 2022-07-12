@@ -6,8 +6,10 @@ package p60.semana02;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -16,35 +18,42 @@ import java.io.FileWriter;
 public class Principal {
     
     public static void main(String [] args){
+        
         try
         {
-            FileWriter archivoEscritura = new FileWriter("c:/carpeta1/archivoTexto.txt", true);
-            BufferedWriter escritura = new BufferedWriter(archivoEscritura);
-            escritura.append("Hola mundo"+'\n');
-            escritura.close();
+            var archivoEscritura = new FileWriter("c:/carpeta1/archivoTexto.txt", true);
+            var escritura = new BufferedWriter(archivoEscritura);
+            escritura.append("Hola Amédfdsfdsfrica"+'\n');
+            escritura.newLine();
+            escritura.close(); 
         }
-        catch(Exception e1)
+        catch(FileNotFoundException e1)
+        {
+            System.out.println("No se encontró el archivo");
+        }
+        catch(IOException e1)
         {
             System.out.println("Error General");
         }
         
         try
         {
-            String ruta="c:/carpeta1/archivoTexto.txt";
-            FileReader archivoLectura = new FileReader(ruta);
-            BufferedReader lectura = new BufferedReader(archivoLectura);
-            String linea="";
-            while(linea!=null)
-            {
+            var archivoLectura = new FileReader("c:/carpeta1/archivoTexto.txt");
+            var lectura = new BufferedReader(archivoLectura);
+            var linea="";
+            while(linea!=null){
                 linea=lectura.readLine();
                 System.out.println(linea);
             }
             lectura.close();
         }
-        catch(Exception e1)
-        {
-            System.out.println("Error General");
-        }      
+        catch(FileNotFoundException e){
+            System.out.println("No existe el archivo que desea leer");
+        }
+        catch(Exception e1){
+            System.out.println("Error General"+e1.getMessage()+e1.toString());
+        }    
+
     }
     
 }
