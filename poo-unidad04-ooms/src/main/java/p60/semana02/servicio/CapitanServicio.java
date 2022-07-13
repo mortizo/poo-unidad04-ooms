@@ -28,26 +28,25 @@ public class CapitanServicio implements ICapitanServicio{
         var capitanBuscado=this.buscarPorCodigo(capitan.getCodigo());
         if(capitanBuscado==null){
             this.capitanList.add(capitan);
-            try {
-                this.almacenarEnArchivo(capitan, "C:/carpeta1/archivoCapitan.dat");
-            } catch (IOException ex) {
-                
-            }
         }else{
             throw new RuntimeException("El código ingresado ya se encuentra "
                     + "asignado al Capitán: "+capitanBuscado.getNombre());
         }
+        try {
+            this.almacenarEnArchivo(capitan, "C:/carpeta1/archivoCapitan.dat");
+        } catch (Exception ex) {
+            throw new RuntimeException("No se puede almacenar en archivo"+ex.getMessage());
+        }
         return capitan;
     }
-    
-   
     
     public List<Capitan> listar(){
         List<Capitan> retorno=null;
         try {
             retorno=this.recuperarDeArchivo("C:/carpeta1/archivoCapitan.dat");
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             retorno=this.capitanList;
+            throw new RuntimeException("No se puede recuperar de archivo"+ex.getMessage());
         }
         return retorno;
     }
@@ -65,7 +64,7 @@ public class CapitanServicio implements ICapitanServicio{
     }
 
     @Override
-    public boolean almacenarEnArchivo(Capitan capitan, String rutaArchivo) throws IOException{
+    public boolean almacenarEnArchivo(Capitan capitan, String rutaArchivo) throws Exception{
         var retorno = false;
         DataOutputStream salida=null;
         try{
@@ -83,7 +82,7 @@ public class CapitanServicio implements ICapitanServicio{
     }
 
     @Override
-    public List<Capitan> recuperarDeArchivo(String rutaArchivo) throws IOException {
+    public List<Capitan> recuperarDeArchivo(String rutaArchivo) throws Exception {
         var capitanList = new ArrayList<Capitan>();
         DataInputStream entrada=null;
         try{

@@ -4,7 +4,6 @@
  */
 package p60.semana02.servicio;
 
-import java.io.IOException;
 import java.util.List;
 import p60.semana02.modelo.Capitan;
 
@@ -17,8 +16,8 @@ public interface ICapitanServicio {
     public Capitan crear(Capitan capitan);
     public Capitan buscarPorCodigo(int codigoCapitan);
     public List<Capitan> listar();   
-    public boolean almacenarEnArchivo(Capitan capitan, String rutaArchivo) throws IOException;
-    public List<Capitan> recuperarDeArchivo(String rutaArchivo) throws IOException;
+    public boolean almacenarEnArchivo(Capitan capitan, String rutaArchivo) throws Exception;
+    public List<Capitan> recuperarDeArchivo(String rutaArchivo) throws Exception;
     
     
 }
