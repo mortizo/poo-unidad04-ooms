@@ -4,12 +4,14 @@
  */
 package p60.semana02.modelo;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author morti
  */
-public class Capitan {
+public class Capitan implements Serializable{
     
     private int codigo;
     private String nombre;

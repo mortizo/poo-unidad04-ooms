@@ -14,7 +14,6 @@ import java.time.Period;
  * @author morti
  */
 public class Persona implements Serializable{
- //   private static final long serialVersionUID = 1L;
     
     private int codigo;
     private String nombre;

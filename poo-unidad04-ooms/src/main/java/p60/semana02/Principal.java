@@ -23,7 +23,7 @@ public class Principal {
         {
             var archivoEscritura = new FileWriter("c:/carpeta1/archivoTexto.txt", true);
             var escritura = new BufferedWriter(archivoEscritura);
-            escritura.append("Hola Amédfdsfdsfrica"+'\n');
+            escritura.append("Hola Mundo"+'\n');
             escritura.newLine();
             escritura.close(); 
         }

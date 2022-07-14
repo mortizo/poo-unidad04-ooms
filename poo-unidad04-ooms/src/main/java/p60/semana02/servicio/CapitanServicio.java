@@ -41,14 +41,12 @@ public class CapitanServicio implements ICapitanServicio{
     }
     
     public List<Capitan> listar(){
-        List<Capitan> retorno=null;
         try {
-            retorno=this.recuperarDeArchivo("C:/carpeta1/archivoCapitan.dat");
+            this.capitanList=this.recuperarDeArchivo("C:/carpeta1/archivoCapitan.dat");
         } catch (Exception ex) {
-            retorno=this.capitanList;
             throw new RuntimeException("No se puede recuperar de archivo"+ex.getMessage());
         }
-        return retorno;
+        return this.capitanList;
     }
 
     @Override

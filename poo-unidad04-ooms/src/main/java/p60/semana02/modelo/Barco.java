@@ -9,7 +9,7 @@ package p60.semana02.modelo;
  *
  * @author morti
  */
-public class Barco {
+public class Barco implements java.io.Serializable{
     
     private int codigo;
     private String nombre;

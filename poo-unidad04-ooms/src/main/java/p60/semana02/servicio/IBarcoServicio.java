@@ -20,5 +20,7 @@ public interface IBarcoServicio {
     public Barco buscarPorCodigo(int codigoBarco);
     public int buscarPosicion(Barco barco);
     public List<Barco> listar(); 
+    public boolean almacenarEnArchivo(Barco barco, String rutaArchivo) throws Exception;
+    public List<Barco> recuperarDeArchivo(String rutaArchivo) throws Exception;
     
 }
