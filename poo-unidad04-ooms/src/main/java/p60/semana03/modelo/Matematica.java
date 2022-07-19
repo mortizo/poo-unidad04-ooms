@@ -29,6 +29,14 @@ public class Matematica {
         return valor1-valor2-valor3;
     }
     
+    public double calcularMultiplicacion(){
+        return valor1*valor2*valor3;
+    }
+    
+    public double calcularDivision(){
+        return valor1/valor2/valor3;
+    }
+    
     
     
 }

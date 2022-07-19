@@ -53,5 +53,31 @@ public class MatematicaTest {
         double result = instance.calcularResta();
         assertEquals(expResult, result, 0.0);
     }
+
+    @Test
+    public void testCalcularMultiplicacion() {
+        System.out.println("calcularMultiplicacion");
+        Matematica instance = new Matematica(1,1,9);
+        double expResult = 9.0;
+        double result = instance.calcularMultiplicacion();
+        assertEquals(expResult, result, 0.0);
+    }
+
+    @Test
+    public void testCalcularDivision01() {
+        System.out.println("calcularDivision con decimales");
+        Matematica instance = new Matematica(80,7.999999966666661412,10);
+        double expResult = 1.0;
+        double result = instance.calcularDivision();
+        assertEquals(expResult, result, 0.001);
+    }
+    @Test
+    public void testCalcularDivision02() {
+        System.out.println("calcularDivision con enteros");
+        Matematica instance = new Matematica(80,8,10);
+        double expResult = 1.0;
+        double result = instance.calcularDivision();
+        assertEquals(expResult, result, 0.001);
+    }
     
 }
