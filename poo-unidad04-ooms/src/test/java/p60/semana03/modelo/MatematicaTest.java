@@ -4,6 +4,7 @@
  */
 package p60.semana03.modelo;
 
+import p60.u04_03.modelo.Matematica;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
