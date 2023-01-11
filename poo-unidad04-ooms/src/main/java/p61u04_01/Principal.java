@@ -15,19 +15,22 @@ public class Principal {
 
     public static void main(String[] args) {
 
-        try {
-            System.out.println("Ingrese un número");
-            var numero = new Scanner(System.in).nextInt();
-            if (numero > 10) {
-
-            } else {
-
+        var finaliza = false;
+        while (finaliza == false) {
+            try {
+                int vector[] = new int[2];
+                System.out.println("Ingrese un número");
+                var numero = new Scanner(System.in).nextInt();
+                vector[numero]=numero;
+                System.out.println("numero = " + 100 / numero);
+                finaliza = true;
+            } catch (InputMismatchException e1) {
+                System.out.println("Error en el ingreso" + e1.toString());
+            } catch (ArithmeticException e1) {
+                System.out.println("Error en el valor ya que es una división para Cero " + e1.toString());
+            }catch (ArrayIndexOutOfBoundsException e1) {
+                System.out.println("El índice no es el adecuado" + e1.toString());
             }
-            System.out.println("numero = " + 100 / numero);
-        }catch(InputMismatchException e1){
-            System.out.println("Error en el ingreso"+e1.toString());
-        }catch(ArithmeticException e1){
-            System.out.println("Error en el valor ya que es una división para Cero "+e1.toString());
         }
     }
 
