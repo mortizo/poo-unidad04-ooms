@@ -4,8 +4,14 @@
  */
 package p61.u04_01.servicio;
 
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import p61.u04_01.modelo.Ciudad;
 
 
@@ -20,6 +26,7 @@ public class CiudadServiceImpl implements CiudadService {
     @Override
     public void crear(Ciudad ciudad) {
         this.ciudadList.add(ciudad);
+        this.almacenarArchivo(ciudad, "C:/Netbeans1/ciudad.dat");
     }
 
     @Override
@@ -36,6 +43,7 @@ public class CiudadServiceImpl implements CiudadService {
 
     @Override
     public List<Ciudad> listar() {
+        
         return this.ciudadList;
     }
 
@@ -51,6 +59,26 @@ public class CiudadServiceImpl implements CiudadService {
         }
 
         return retorno;
+    }
+
+    @Override
+    public void almacenarArchivo(Ciudad ciudad, String ruta) {
+        DataOutputStream salida=null;
+        
+        try {
+            salida= new DataOutputStream(new FileOutputStream(ruta,true));
+            salida.writeInt(ciudad.getCodigo());
+            salida.writeUTF(ciudad.getNombre());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(CiudadServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+
+    @Override
+    public List<Ciudad> recuperarArchivo(String ruta) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
