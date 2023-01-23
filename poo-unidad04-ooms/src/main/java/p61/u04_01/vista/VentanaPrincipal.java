@@ -4,7 +4,10 @@
  */
 package p61.u04_01.vista;
 
+import java.util.List;
 import javax.swing.JFrame;
+import p61.u04_01.modelo.Ciudad;
+import p61.u04_01.servicio.CiudadServiceImpl;
 
 /**
  *
@@ -165,6 +168,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VentanaPrincipal().setVisible(true);
+                var ciudadServiceImpl=new CiudadServiceImpl();
+                List<Ciudad> ciudadList=ciudadServiceImpl.recuperarArchivo("C:/Netbeans1/ciudad.dat");
+                ciudadServiceImpl.setCiudadList(ciudadList);
             }
         });
     }

@@ -4,7 +4,9 @@
  */
 package p61.u04_01.servicio;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,7 +15,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import p61.u04_01.modelo.Ciudad;
-
 
 /**
  *
@@ -43,17 +44,17 @@ public class CiudadServiceImpl implements CiudadService {
 
     @Override
     public List<Ciudad> listar() {
-        
+
         return this.ciudadList;
     }
 
     @Override
     public Ciudad buscarPorNombre(String nombre) {
         Ciudad retorno = null;
-        
-        for(var ciudad:this.ciudadList){
-            if(nombre.equals(ciudad.getNombre())){
-                retorno=ciudad;
+
+        for (var ciudad : this.ciudadList) {
+            if (nombre.equals(ciudad.getNombre())) {
+                retorno = ciudad;
                 break;
             }
         }
@@ -63,22 +64,52 @@ public class CiudadServiceImpl implements CiudadService {
 
     @Override
     public void almacenarArchivo(Ciudad ciudad, String ruta) {
-        DataOutputStream salida=null;
-        
+        DataOutputStream salida = null;
+
         try {
-            salida= new DataOutputStream(new FileOutputStream(ruta,true));
+            salida = new DataOutputStream(new FileOutputStream(ruta, true));
             salida.writeInt(ciudad.getCodigo());
             salida.writeUTF(ciudad.getNombre());
-            
+            salida.writeUTF(ciudad.getPais());
+            salida.writeInt(ciudad.getPoblacion());
+
         } catch (IOException ex) {
             Logger.getLogger(CiudadServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
     }
 
     @Override
     public List<Ciudad> recuperarArchivo(String ruta) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        var ciudadList = new ArrayList<Ciudad>();
+        DataInputStream entrada = null;
+        try {
+            entrada = new DataInputStream(new FileInputStream(ruta));
+            while (true) {
+                var codigo = entrada.readInt();
+                var nombre = entrada.readUTF();
+                var pais = entrada.readUTF();
+                var poblacion = entrada.readInt();
+                var ciudad = new Ciudad(codigo, nombre, pais, poblacion);
+                System.out.println("ciudad = " + ciudad);
+                ciudadList.add(ciudad);
+            }
+        } catch (IOException e) {
+            try {
+                entrada.close();
+            } catch (IOException ex) {
+                Logger.getLogger(CiudadServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return ciudadList;
+    }
+
+    public    List<Ciudad> getCiudadList() {
+        return ciudadList;
+    }
+
+    public   void setCiudadList(List<Ciudad> ciudadList) {
+        CiudadServiceImpl.ciudadList = ciudadList;
     }
 
 }
