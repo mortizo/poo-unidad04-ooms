@@ -4,13 +4,14 @@
  */
 package p61.u04_01.modelo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author Mauricio Ortiz
  */
-public class Viaje {
+public class Viaje implements Serializable{
     
     private int codigo;
     private Ciudad origen;

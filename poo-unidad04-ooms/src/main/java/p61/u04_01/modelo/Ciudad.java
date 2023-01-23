@@ -4,13 +4,15 @@
  */
 package p61.u04_01.modelo;
 
+import java.io.Serializable;
+
 
 
 /**
  *
  * @author Mauricio Ortiz
  */
-public class Ciudad {
+public class Ciudad implements Serializable{
     
     private int codigo;
     private String nombre;

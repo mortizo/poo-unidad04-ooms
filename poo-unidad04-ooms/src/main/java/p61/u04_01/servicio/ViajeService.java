@@ -7,7 +7,6 @@ package p61.u04_01.servicio;
 import java.util.List;
 import p61.u04_01.modelo.Viaje;
 
-
 /**
  *
  * @author Mauricio Ortiz
@@ -17,4 +16,9 @@ public interface ViajeService {
     public void crear(Viaje viaje);
 
     public List<Viaje> listar();
+
+    public void almacenarArchivo(Viaje viaje, String ruta);
+
+    public List<Viaje> recuperarArchivo(String ruta);
+
 }

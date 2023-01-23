@@ -91,7 +91,6 @@ public class CiudadServiceImpl implements CiudadService {
                 var pais = entrada.readUTF();
                 var poblacion = entrada.readInt();
                 var ciudad = new Ciudad(codigo, nombre, pais, poblacion);
-                System.out.println("ciudad = " + ciudad);
                 ciudadList.add(ciudad);
             }
         } catch (IOException e) {
