@@ -4,8 +4,12 @@
  */
 package p61.u04_01.servicio;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +17,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import p61.u04_01.modelo.Viaje;
 
-
 /**
  *
  * @author Mauricio Ortiz
  */
-public class ViajeServiceImpl implements ViajeService{
+public class ViajeServiceImpl implements ViajeService {
 
     private static List<Viaje> viajeList = new ArrayList<>();
 
     @Override
     public void crear(Viaje viaje) {
-  
+
         this.viajeList.add(viaje);
         this.almacenarArchivo(viaje, "C:/Netbeans1/viaje.dat");
     }
@@ -36,14 +39,14 @@ public class ViajeServiceImpl implements ViajeService{
 
     @Override
     public void almacenarArchivo(Viaje viaje, String ruta) {
-    
-        ObjectOutputStream salida=null;
-        
+
+        ObjectOutputStream salida = null;
+
         try {
             salida = new ObjectOutputStream(new FileOutputStream(ruta, true));
             salida.writeObject(viaje);
             salida.close();
-        
+
         } catch (Exception ex) {
             Logger.getLogger(ViajeServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,18 +54,34 @@ public class ViajeServiceImpl implements ViajeService{
 
     @Override
     public List<Viaje> recuperarArchivo(String ruta) {
-        
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    public  List<Viaje> getViajeList() {
+        var viajeList = new ArrayList<Viaje>();
+        ObjectInputStream entrada = null;
+
+        try {
+            var fis = new FileInputStream(new File(ruta));
+            while (fis.available() > 0) {
+                entrada = new ObjectInputStream(fis);
+                Viaje viaje = (Viaje) entrada.readObject();
+                viajeList.add(viaje);
+            }
+            entrada.close();
+        } catch (Exception ex) {
+            try {
+                entrada.close();
+            } catch (IOException ex1) {
+                Logger.getLogger(ViajeServiceImpl.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
         return viajeList;
     }
 
-    public  void setViajeList(List<Viaje> viajeList) {
+    public List<Viaje> getViajeList() {
+        return viajeList;
+    }
+
+    public void setViajeList(List<Viaje> viajeList) {
         ViajeServiceImpl.viajeList = viajeList;
     }
-    
-    
-    
+
 }
